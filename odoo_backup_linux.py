@@ -26,10 +26,11 @@ print today_file
 today_str = _now.strftime("%Y-%m-%d %H:%M:%S")
 print today_str
 
-global logging = ''
+logging = ''
 
 def _logger(strings):
-    global logging += strings
+    global logging
+    logging += strings
 
 # 创建日志函数
 def writeLogs(filename, contents):
@@ -84,11 +85,12 @@ def main():
     datetime:2016-12-06
     target software: odoo 10 enterprise
     '''
+    global logging
     _logger("-"*79 + "\nOperation time: {}\n".format(today_str))
     postgress_database_backup(PG_USER, DATABASES, backup_dir, today_file)
     file_dir_backup(data_dir, data_dir, today_file)
     delete_old_backup(backup_dir)
-    writeLogs(log_path, global logging)
+    writeLogs(log_path, logging)
 
 if __name__ == "__main__":
     main()
