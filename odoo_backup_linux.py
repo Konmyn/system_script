@@ -83,7 +83,7 @@ def main():
     target software: odoo 10 enterprise
     '''
     writeLogs(log_path, "-"*79 + "\nOperation time: {}\n".format(today_str))
-    postgress_database_backup(PG_USER, pg_pwd, DATABASES, backup_dir, today_file)
+    postgress_database_backup(PG_USER, DATABASES, backup_dir, today_file)
     # file_dir_backup(data_dir, backup_dir, today_file)
     # deleteBackup(backup_dir, 10)
 
