@@ -9,11 +9,11 @@ PG_USER = 'root'
 # 需要备份的数据库列表
 DATABASES = ['kalisign']
 # 备份文件存放路径
-backup_dir = '/root/backup/'
+BACKUP_DIR = '/root/backup/'
 # data_dir in odoo.conf and then specified for filestore.
-data_dir = '/root/.local/share/Odoo/filestore'
+DATA_DIR = '/root/.local/share/Odoo/filestore'
 # log文档的全路径
-log_path = backup_dir + 'backup.log'
+LOG_PATH = BACKUP_DIR + 'backup.log'
 
 
 # time related variables
@@ -28,11 +28,12 @@ print today_str
 
 logging = ''
 
+# log 缓存
 def _logger(strings):
     global logging
     logging += strings
 
-# 创建日志函数
+# log 函数
 def writeLogs(filename, contents):
     log_file = file(filename,'a+')
     log_file.write(contents)
@@ -50,7 +51,7 @@ def postgress_database_backup(user, databases, file_path, file_prefix):
     return True
 
 # 文件夹备份函数
-def file_dir_backup(directory, file_path, file_prefix):
+def file_dir_backup(file_path, file_prefix):
     backup_name = '{}.data.tar.gz'.format(file_prefix)
     # tar czvf usr.tar.gz /home
     # tar xzvf usr.tar.gz
@@ -83,14 +84,17 @@ def main():
     speciafied for kalisign company.
     system information: linux.
     datetime:2016-12-06
-    target software: odoo 10 enterprise
+    target software: odoo 10 enterprise with kalisign addons
     '''
-    global logging
-    _logger("-"*79 + "\nOperation time: {}\n".format(today_str))
-    postgress_database_backup(PG_USER, DATABASES, backup_dir, today_file)
-    file_dir_backup(data_dir, data_dir, today_file)
-    delete_old_backup(backup_dir)
-    writeLogs(log_path, logging)
+    _logger("{}\nOperation time: {}\n".format("-"*79, today_str))
+    postgress_database_backup(PG_USER, DATABASES, BACKUP_DIR, today_file)
+    file_dir_backup(DATA_DIR, today_file)
+    delete_old_backup(BACKUP_DIR)
 
 if __name__ == "__main__":
+    from timeit import default_timer
+    start_time = default_timer()
     main()
+    end_time = default_timer()
+    _logger("Time used(s): {}".format(end_time - start_time))
+    writeLogs(LOG_PATH, logging)
