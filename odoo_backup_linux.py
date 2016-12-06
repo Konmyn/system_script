@@ -21,10 +21,8 @@ LOG_PATH = BACKUP_DIR + 'backup.log'
 _now = datetime.datetime.now()
 # 2016-11-02-11-28-21, 用类似这样的格式作为文件前缀
 today_file = _now.strftime("%Y%m%d")
-print today_file
 # 2016-11-02 14:47:31, 用类似这样的时间格式作为log信息记录
 today_str = _now.strftime("%Y-%m-%d %H:%M:%S")
-print today_str
 
 logging = ''
 
@@ -67,7 +65,6 @@ def file_dir_backup(file_path, file_prefix):
 # 旧备份文件删除函数
 def delete_old_backup(file_path, term=7):
     prefix = (datetime.datetime.now() - datetime.timedelta(days = term)).strftime("%Y%m%d")
-    print prefix
     _files = os.listdir(file_path)
     for _file in _files:
         if _file[:len(prefix)] == prefix:
@@ -96,5 +93,5 @@ if __name__ == "__main__":
     start_time = default_timer()
     main()
     end_time = default_timer()
-    _logger("Time used(s): {:.2f}\n".format(end_time - start_time))
+    _logger("Time used(sec): {:.2f}\n".format(end_time - start_time))
     writeLogs(LOG_PATH, logging)
