@@ -13,7 +13,7 @@ DATABASES = ['kalisign']
 # 备份文件夹
 backup_dir = '/root/backup/'
 # data_dir in odoo.conf and then specified for filestore.
-data_dir = '/root/.local/share/Odoo'
+data_dir = '/root/.local/share/Odoo/filestore'
 # log文档的全路径
 log_path = backup_dir + 'backup.log'
 
@@ -60,22 +60,18 @@ def file_dir_backup(directory, file_path, file_prefix):
         return True
 
 # 旧备份文件删除函数
-def deleteBackup(file_path, term=7):
-    prefix = (datetime.datetime.now() - datetime.timedelta(days = term)).strftime("%Y-%m-%d")
+def delete_old_backup(file_path, term=7):
+    prefix = (datetime.datetime.now() - datetime.timedelta(days = term)).strftime("%Y%m%d")
+    print prefix
     _files = os.listdir(file_path)
     for _file in _files:
         if _file[:len(prefix)] == prefix:
             target_path = os.path.join(file_path, _file)
-            del_cmd = "del/f/s/q {}".format(target_path)
-            if os.system(del_cmd):
+            rm_cmd = "rm -f {}".format(target_path)
+            if os.system(rm_cmd):
                 writeLogs(log_path, "Delete file failed: {}\n".format(_file))
             else:
                 writeLogs(log_path, "Delete file completed: {}\n".format(_file))
-            # try:
-            #     os.remove(file_path)
-            #     writeLogs(log_path, "Delete file completed: {}\n".format(_file))
-            # except:
-            #     writeLogs(log_path, "Delete file failed: {}\n".format(_file))
     return True
 
 def main():
@@ -88,7 +84,7 @@ def main():
     writeLogs(log_path, "-"*79 + "\nOperation time: {}\n".format(today_str))
     postgress_database_backup(PG_USER, DATABASES, backup_dir, today_file)
     file_dir_backup(data_dir, data_dir, today_file)
-    # deleteBackup(backup_dir, 10)
+    delete_old_backup(backup_dir, 10)
 
 if __name__ == "__main__":
     main()
