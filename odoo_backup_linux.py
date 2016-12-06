@@ -87,7 +87,7 @@ def main():
     '''
     writeLogs(log_path, "-"*79 + "\nOperation time: {}\n".format(today_str))
     postgress_database_backup(PG_USER, DATABASES, backup_dir, today_file)
-    file_dir_backup(data_dir, backup_dir, today_file)
+    file_dir_backup(data_dir, data_dir, today_file)
     # deleteBackup(backup_dir, 10)
 
 if __name__ == "__main__":
