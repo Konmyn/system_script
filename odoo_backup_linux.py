@@ -96,5 +96,5 @@ if __name__ == "__main__":
     start_time = default_timer()
     main()
     end_time = default_timer()
-    _logger("Time used(s): {}".format(end_time - start_time))
+    _logger("Time used(s): {:.2f}\n".format(end_time - start_time))
     writeLogs(LOG_PATH, logging)
