@@ -54,7 +54,7 @@ def file_dir_backup(directory, file_path, file_prefix):
     backup_name = '{}.data.tar.gz'.format(file_prefix)
     # tar czvf usr.tar.gz /home
     # tar xzvf usr.tar.gz
-    cmp_cmd = "tar czvf {} {}".format(backup_name, file_path)
+    cmp_cmd = "tar czf {} {}".format(backup_name, file_path)
 
     if os.system(cmp_cmd):
         _logger("Backup odoo data files failed!\n")
