@@ -47,13 +47,16 @@ def postgress_database_backup(user, databases, file_path, file_prefix):
 
 # 文件夹备份函数
 def file_dir_backup(directory, file_path, file_prefix):
-    backup_name = '{}.data.backup.gz'.format(file_prefix)
-    cmp_cmd = "gzip {} > {}".format(file_path, backup_name)
-    if os.system(zip_cmd):
-        writeLogs(log_path, "Backup filestore failed!\n")
+    backup_name = '{}.data.tar.gz'.format(file_prefix)
+    # tar czvf usr.tar.gz /home
+    # tar xzvf usr.tar.gz
+    cmp_cmd = "tar czvf {} {}".format(backup_name, file_path)
+
+    if os.system(cmp_cmd):
+        writeLogs(log_path, "Backup odoo data files failed!\n")
         return False
     else:
-        writeLogs(log_path, "Backup #filestore# completed.\n")
+        writeLogs(log_path, "Backup #odoo data files# completed.\n")
         return True
 
 # 旧备份文件删除函数
@@ -84,7 +87,7 @@ def main():
     '''
     writeLogs(log_path, "-"*79 + "\nOperation time: {}\n".format(today_str))
     postgress_database_backup(PG_USER, DATABASES, backup_dir, today_file)
-    # file_dir_backup(data_dir, backup_dir, today_file)
+    file_dir_backup(data_dir, backup_dir, today_file)
     # deleteBackup(backup_dir, 10)
 
 if __name__ == "__main__":
