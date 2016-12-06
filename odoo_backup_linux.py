@@ -6,11 +6,9 @@ import os, datetime
 
 # postgreSQL的当前用户
 PG_USER = 'root'
-# 当前用户(administrator)的postgres登录密码
-PG_PASSWORD = 'admin'
 # 需要备份的数据库列表
 DATABASES = ['kalisign']
-# 备份文件夹
+# 备份文件存放路径
 backup_dir = '/root/backup/'
 # data_dir in odoo.conf and then specified for filestore.
 data_dir = '/root/.local/share/Odoo/filestore'
@@ -28,6 +26,11 @@ print today_file
 today_str = _now.strftime("%Y-%m-%d %H:%M:%S")
 print today_str
 
+global logging = ''
+
+def _logger(strings):
+    global logging += strings
+
 # 创建日志函数
 def writeLogs(filename, contents):
     log_file = file(filename,'a+')
@@ -40,9 +43,9 @@ def postgress_database_backup(user, databases, file_path, file_prefix):
         backup_name = '{}.{}.backup.gz'.format(file_prefix, datebase)
         backup_cmd = "pg_dump {} | gzip > {}".format(datebase, file_path+backup_name)
         if os.system(backup_cmd):
-            writeLogs(log_path, "Backup database failed!\n")
+            _logger("Backup database failed!\n")
         else:
-            writeLogs(log_path, "Backup *{}* completed.\n".format(datebase))
+            _logger("Backup *{}* completed.\n".format(datebase))
     return True
 
 # 文件夹备份函数
@@ -53,10 +56,10 @@ def file_dir_backup(directory, file_path, file_prefix):
     cmp_cmd = "tar czvf {} {}".format(backup_name, file_path)
 
     if os.system(cmp_cmd):
-        writeLogs(log_path, "Backup odoo data files failed!\n")
+        _logger("Backup odoo data files failed!\n")
         return False
     else:
-        writeLogs(log_path, "Backup #odoo data files# completed.\n")
+        _logger("Backup #odoo data files# completed.\n")
         return True
 
 # 旧备份文件删除函数
@@ -69,22 +72,23 @@ def delete_old_backup(file_path, term=7):
             target_path = os.path.join(file_path, _file)
             rm_cmd = "rm -f {}".format(target_path)
             if os.system(rm_cmd):
-                writeLogs(log_path, "Delete file failed: {}\n".format(_file))
+                _logger("Delete file failed: {}\n".format(_file))
             else:
-                writeLogs(log_path, "Delete file completed: {}\n".format(_file))
+                _logger("Delete file completed: {}\n".format(_file))
     return True
 
 def main():
     '''
-    speciafied for central hub company.
-    system information: windows server 2008.
-    datetime:2016-11-02
+    speciafied for kalisign company.
+    system information: linux.
+    datetime:2016-12-06
     target software: odoo 10 enterprise
     '''
-    writeLogs(log_path, "-"*79 + "\nOperation time: {}\n".format(today_str))
+    _logger("-"*79 + "\nOperation time: {}\n".format(today_str))
     postgress_database_backup(PG_USER, DATABASES, backup_dir, today_file)
     file_dir_backup(data_dir, data_dir, today_file)
-    delete_old_backup(backup_dir, 10)
+    delete_old_backup(backup_dir)
+    writeLogs(log_path, global logging)
 
 if __name__ == "__main__":
     main()
