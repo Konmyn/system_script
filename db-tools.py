@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # We are talking to the running odoo server through xmlrpc
 #
 # look at "odoo/openerp/service/db.py" or common.py or modules.py and search for "def dispatch(...)" : there you can
@@ -21,7 +23,7 @@ def newdb(args):
         sys.exit(0)
     else:
         sys.exit(2)
-        
+
 # Duplicate Database:
 def dupdb(args):
     # Duplicate the Database
