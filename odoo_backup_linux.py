@@ -11,7 +11,7 @@ DATABASES = ['kalisign']
 # 备份文件存放路径
 BACKUP_DIR = '/root/backup/'
 # data_dir in odoo.conf and then specified for filestore.
-DATA_DIR = '/root/.local/share/Odoo/filestore'
+DATA_DIR = '/root/.local/share/Odoo/filestore/'
 # log文档的全路径
 LOG_PATH = BACKUP_DIR + 'backup.log'
 
@@ -49,8 +49,8 @@ def postgress_database_backup(user, databases, file_path, file_prefix):
     return True
 
 # 文件夹备份函数
-def file_dir_backup(file_path, file_prefix):
-    backup_name = '{}.data.tar.gz'.format(file_prefix)
+def file_dir_backup(backup_path, file_path, file_prefix):
+    backup_name = '{}.data.tar.gz'.format(backup_path + file_prefix)
     # tar czvf usr.tar.gz /home
     # tar xzvf usr.tar.gz
     cmp_cmd = "tar czf {} {}".format(backup_name, file_path)
@@ -85,7 +85,7 @@ def main():
     '''
     _logger("{}\nOperation time: {}\n".format("-"*79, today_str))
     postgress_database_backup(PG_USER, DATABASES, BACKUP_DIR, today_file)
-    file_dir_backup(DATA_DIR, today_file)
+    file_dir_backup(BACKUP_DIR, DATA_DIR, today_file)
     delete_old_backup(BACKUP_DIR)
 
 if __name__ == "__main__":
