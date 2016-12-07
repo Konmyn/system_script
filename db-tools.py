@@ -39,7 +39,7 @@ def dupdb(args):
 def backup(args):
     with open(args.filedump, 'w') as f:
         #f.write(server.dump(args.superpwd, args.database, backup_format=args.type).decode('base64'))
-        f.write(server.dump(args.superpwd, args.database).decode('base64'))
+        f.write(server.dump(args.superpwd, args.database, 'zip').decode('base64'))
         if f:
             print 'Database Backup File Name: %s' % f.name
             sys.exit(0)
