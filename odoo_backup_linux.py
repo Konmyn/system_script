@@ -7,7 +7,7 @@ import os, datetime
 # postgreSQL的当前用户
 PG_USER = 'root'
 # 需要备份的数据库列表
-DATABASES = ['kalisign']
+DATABASES = ['kalisign', 'kaliserver']
 # 备份文件存放路径
 BACKUP_DIR = '/root/backup/'
 # data_dir in odoo.conf and then specified for filestore.
@@ -80,7 +80,7 @@ def main():
     '''
     speciafied for kalisign company.
     system information: linux.
-    datetime:2016-12-06
+    datetime:2017-02-27
     target software: odoo 10 enterprise with kalisign addons
     '''
     _logger("{}\nOperation time: {}\n".format("-"*79, today_str))
