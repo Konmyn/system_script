@@ -63,7 +63,7 @@ def file_dir_backup(backup_path, file_path, file_prefix):
         return True
 
 # 旧备份文件删除函数
-def delete_old_backup(file_path, term=7):
+def delete_old_backup(file_path, term=3):
     prefix = (datetime.datetime.now() - datetime.timedelta(days = term)).strftime("%Y%m%d")
     _files = os.listdir(file_path)
     for _file in _files:
