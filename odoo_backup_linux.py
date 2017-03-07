@@ -41,7 +41,7 @@ def writeLogs(filename, contents):
 def postgress_database_backup(user, databases, file_path, file_prefix):
     for datebase in databases:
         backup_name = '{}.{}.backup.gz'.format(file_prefix, datebase)
-        backup_cmd = "pg_dump {} | gzip > {}".format(datebase, file_path+backup_name)
+        backup_cmd = "pg_dump -O {} | gzip > {}".format(datebase, file_path+backup_name)
         if os.system(backup_cmd):
             _logger("Backup database failed!\n")
         else:
