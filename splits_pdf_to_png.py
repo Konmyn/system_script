@@ -8,13 +8,8 @@ import sys
 from io import BytesIO
 
 def ReadPdf(document):
-    file_input = open(document,'rb')
-    caches = BytesIO('w')
-    base64.encode(file_input, caches)
-    file_input.close()
-    caches.seek(0)
-    content = caches.read()
-    caches.close()
+    with open(document) as f:
+        content = base64.b64encode(f.read())
     return content
 
 def PdfSniff(content):
