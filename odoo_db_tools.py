@@ -8,6 +8,9 @@
 #
 # ATTENTION: be aware that for most db.py methods the fist argument is always the SUPER_PASSWORD
 #            look at: passwd = params[0] and params = params[1:]
+
+# Warning: backup database over 500M will end up with segement fault. Found in Kalisign
+
 import sys
 import argparse
 import base64
