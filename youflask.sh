@@ -1,7 +1,0 @@
-you-get 'https://www.youtube.com/watch?v=hLR71ZJBUFU&list=PLQVvvaa0QuDc_owjTbIY4rbgXOFkUYOUB&index=6'
-you-get 'https://www.youtube.com/watch?v=lUCmVNGs5gw&index=12&list=PLQVvvaa0QuDc_owjTbIY4rbgXOFkUYOUB'
-you-get 'https://www.youtube.com/watch?v=T-Sc-uq4n5c&index=14&list=PLQVvvaa0QuDc_owjTbIY4rbgXOFkUYOUB'
-you-get 'https://www.youtube.com/watch?v=n2hLIfLHhOk&list=PLQVvvaa0QuDc_owjTbIY4rbgXOFkUYOUB&index=19'
-you-get 'https://www.youtube.com/watch?v=CD5lFKyH9Ls&list=PLQVvvaa0QuDc_owjTbIY4rbgXOFkUYOUB&index=20'
-you-get 'https://www.youtube.com/watch?v=WgdrhstgSuw&list=PLQVvvaa0QuDc_owjTbIY4rbgXOFkUYOUB&index=27'
-you-get 'https://www.youtube.com/watch?v=2iXfGn1Ur6U&list=PLQVvvaa0QuDc_owjTbIY4rbgXOFkUYOUB&index=35'
